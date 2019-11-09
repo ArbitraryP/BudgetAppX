@@ -40,21 +40,22 @@ public class BudgetAppX extends javax.swing.JFrame {
         lb_Minimize = new javax.swing.JLabel();
         pnl_Title = new javax.swing.JPanel();
         pnl_NavBar = new javax.swing.JPanel();
-        pnl_MainDashB = new javax.swing.JPanel();
+        pnl_NavMainDashB = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
-        pnl_Transactions = new javax.swing.JPanel();
+        pnl_NavTransactions = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        pnl_BudSum = new javax.swing.JPanel();
+        pnl_NavBudSum = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        pnl_Settings = new javax.swing.JPanel();
+        pnl_NavSettings = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
-        pnl_About = new javax.swing.JPanel();
+        pnl_NavAbout = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         pnl_Container = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
         setUndecorated(true);
+        setResizable(false);
 
         pnl_Background.setBackground(new java.awt.Color(0, 0, 0));
 
@@ -123,17 +124,17 @@ public class BudgetAppX extends javax.swing.JFrame {
 
         pnl_NavBar.setBackground(new java.awt.Color(32, 32, 32));
 
-        pnl_MainDashB.setBackground(new java.awt.Color(32, 32, 32));
-        pnl_MainDashB.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, new java.awt.Color(252, 215, 54)));
-        pnl_MainDashB.addMouseListener(new java.awt.event.MouseAdapter() {
+        pnl_NavMainDashB.setBackground(new java.awt.Color(32, 32, 32));
+        pnl_NavMainDashB.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, new java.awt.Color(252, 215, 54)));
+        pnl_NavMainDashB.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                pnl_MainDashBMouseClicked(evt);
+                pnl_NavMainDashBMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                pnl_MainDashBMouseEntered(evt);
+                pnl_NavMainDashBMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                pnl_MainDashBMouseExited(evt);
+                pnl_NavMainDashBMouseExited(evt);
             }
         });
 
@@ -144,39 +145,39 @@ public class BudgetAppX extends javax.swing.JFrame {
         jLabel7.setToolTipText("");
         jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                pnl_MainDashBMouseClicked(evt);
+                pnl_NavMainDashBMouseClicked(evt);
             }
         });
 
-        javax.swing.GroupLayout pnl_MainDashBLayout = new javax.swing.GroupLayout(pnl_MainDashB);
-        pnl_MainDashB.setLayout(pnl_MainDashBLayout);
-        pnl_MainDashBLayout.setHorizontalGroup(
-            pnl_MainDashBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_MainDashBLayout.createSequentialGroup()
+        javax.swing.GroupLayout pnl_NavMainDashBLayout = new javax.swing.GroupLayout(pnl_NavMainDashB);
+        pnl_NavMainDashB.setLayout(pnl_NavMainDashBLayout);
+        pnl_NavMainDashBLayout.setHorizontalGroup(
+            pnl_NavMainDashBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_NavMainDashBLayout.createSequentialGroup()
                 .addContainerGap(25, Short.MAX_VALUE)
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(66, 66, 66))
         );
-        pnl_MainDashBLayout.setVerticalGroup(
-            pnl_MainDashBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnl_MainDashBLayout.createSequentialGroup()
+        pnl_NavMainDashBLayout.setVerticalGroup(
+            pnl_NavMainDashBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_NavMainDashBLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jLabel7)
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
-        pnl_Transactions.setBackground(new java.awt.Color(32, 32, 32));
-        pnl_Transactions.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 5, 0, 0));
-        pnl_Transactions.setForeground(new java.awt.Color(32, 32, 32));
-        pnl_Transactions.addMouseListener(new java.awt.event.MouseAdapter() {
+        pnl_NavTransactions.setBackground(new java.awt.Color(32, 32, 32));
+        pnl_NavTransactions.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 5, 0, 0));
+        pnl_NavTransactions.setForeground(new java.awt.Color(32, 32, 32));
+        pnl_NavTransactions.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                pnl_TransactionsMouseClicked(evt);
+                pnl_NavTransactionsMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                pnl_MainDashBMouseEntered(evt);
+                pnl_NavMainDashBMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                pnl_MainDashBMouseExited(evt);
+                pnl_NavMainDashBMouseExited(evt);
             }
         });
 
@@ -187,38 +188,38 @@ public class BudgetAppX extends javax.swing.JFrame {
         jLabel5.setToolTipText("");
         jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                pnl_TransactionsMouseClicked(evt);
+                pnl_NavTransactionsMouseClicked(evt);
             }
         });
 
-        javax.swing.GroupLayout pnl_TransactionsLayout = new javax.swing.GroupLayout(pnl_Transactions);
-        pnl_Transactions.setLayout(pnl_TransactionsLayout);
-        pnl_TransactionsLayout.setHorizontalGroup(
-            pnl_TransactionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnl_TransactionsLayout.createSequentialGroup()
+        javax.swing.GroupLayout pnl_NavTransactionsLayout = new javax.swing.GroupLayout(pnl_NavTransactions);
+        pnl_NavTransactions.setLayout(pnl_NavTransactionsLayout);
+        pnl_NavTransactionsLayout.setHorizontalGroup(
+            pnl_NavTransactionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_NavTransactionsLayout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        pnl_TransactionsLayout.setVerticalGroup(
-            pnl_TransactionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnl_TransactionsLayout.createSequentialGroup()
+        pnl_NavTransactionsLayout.setVerticalGroup(
+            pnl_NavTransactionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_NavTransactionsLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jLabel5)
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
-        pnl_BudSum.setBackground(new java.awt.Color(32, 32, 32));
-        pnl_BudSum.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 5, 0, 0));
-        pnl_BudSum.addMouseListener(new java.awt.event.MouseAdapter() {
+        pnl_NavBudSum.setBackground(new java.awt.Color(32, 32, 32));
+        pnl_NavBudSum.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 5, 0, 0));
+        pnl_NavBudSum.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                pnl_BudSumMouseClicked(evt);
+                pnl_NavBudSumMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                pnl_MainDashBMouseEntered(evt);
+                pnl_NavMainDashBMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                pnl_MainDashBMouseExited(evt);
+                pnl_NavMainDashBMouseExited(evt);
             }
         });
 
@@ -229,38 +230,38 @@ public class BudgetAppX extends javax.swing.JFrame {
         jLabel6.setToolTipText("");
         jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                pnl_BudSumMouseClicked(evt);
+                pnl_NavBudSumMouseClicked(evt);
             }
         });
 
-        javax.swing.GroupLayout pnl_BudSumLayout = new javax.swing.GroupLayout(pnl_BudSum);
-        pnl_BudSum.setLayout(pnl_BudSumLayout);
-        pnl_BudSumLayout.setHorizontalGroup(
-            pnl_BudSumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnl_BudSumLayout.createSequentialGroup()
+        javax.swing.GroupLayout pnl_NavBudSumLayout = new javax.swing.GroupLayout(pnl_NavBudSum);
+        pnl_NavBudSum.setLayout(pnl_NavBudSumLayout);
+        pnl_NavBudSumLayout.setHorizontalGroup(
+            pnl_NavBudSumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_NavBudSumLayout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        pnl_BudSumLayout.setVerticalGroup(
-            pnl_BudSumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnl_BudSumLayout.createSequentialGroup()
+        pnl_NavBudSumLayout.setVerticalGroup(
+            pnl_NavBudSumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_NavBudSumLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jLabel6)
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
-        pnl_Settings.setBackground(new java.awt.Color(32, 32, 32));
-        pnl_Settings.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 5, 0, 0));
-        pnl_Settings.addMouseListener(new java.awt.event.MouseAdapter() {
+        pnl_NavSettings.setBackground(new java.awt.Color(32, 32, 32));
+        pnl_NavSettings.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 5, 0, 0));
+        pnl_NavSettings.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                pnl_SettingsMouseClicked(evt);
+                pnl_NavSettingsMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                pnl_MainDashBMouseEntered(evt);
+                pnl_NavMainDashBMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                pnl_MainDashBMouseExited(evt);
+                pnl_NavMainDashBMouseExited(evt);
             }
         });
 
@@ -271,38 +272,38 @@ public class BudgetAppX extends javax.swing.JFrame {
         jLabel9.setToolTipText("");
         jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                pnl_SettingsMouseClicked(evt);
+                pnl_NavSettingsMouseClicked(evt);
             }
         });
 
-        javax.swing.GroupLayout pnl_SettingsLayout = new javax.swing.GroupLayout(pnl_Settings);
-        pnl_Settings.setLayout(pnl_SettingsLayout);
-        pnl_SettingsLayout.setHorizontalGroup(
-            pnl_SettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnl_SettingsLayout.createSequentialGroup()
+        javax.swing.GroupLayout pnl_NavSettingsLayout = new javax.swing.GroupLayout(pnl_NavSettings);
+        pnl_NavSettings.setLayout(pnl_NavSettingsLayout);
+        pnl_NavSettingsLayout.setHorizontalGroup(
+            pnl_NavSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_NavSettingsLayout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        pnl_SettingsLayout.setVerticalGroup(
-            pnl_SettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnl_SettingsLayout.createSequentialGroup()
+        pnl_NavSettingsLayout.setVerticalGroup(
+            pnl_NavSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_NavSettingsLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jLabel9)
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
-        pnl_About.setBackground(new java.awt.Color(32, 32, 32));
-        pnl_About.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 5, 0, 0));
-        pnl_About.addMouseListener(new java.awt.event.MouseAdapter() {
+        pnl_NavAbout.setBackground(new java.awt.Color(32, 32, 32));
+        pnl_NavAbout.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 5, 0, 0));
+        pnl_NavAbout.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                pnl_AboutMouseClicked(evt);
+                pnl_NavAboutMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                pnl_MainDashBMouseEntered(evt);
+                pnl_NavMainDashBMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                pnl_MainDashBMouseExited(evt);
+                pnl_NavMainDashBMouseExited(evt);
             }
         });
 
@@ -313,22 +314,22 @@ public class BudgetAppX extends javax.swing.JFrame {
         jLabel10.setToolTipText("");
         jLabel10.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                pnl_AboutMouseClicked(evt);
+                pnl_NavAboutMouseClicked(evt);
             }
         });
 
-        javax.swing.GroupLayout pnl_AboutLayout = new javax.swing.GroupLayout(pnl_About);
-        pnl_About.setLayout(pnl_AboutLayout);
-        pnl_AboutLayout.setHorizontalGroup(
-            pnl_AboutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnl_AboutLayout.createSequentialGroup()
+        javax.swing.GroupLayout pnl_NavAboutLayout = new javax.swing.GroupLayout(pnl_NavAbout);
+        pnl_NavAbout.setLayout(pnl_NavAboutLayout);
+        pnl_NavAboutLayout.setHorizontalGroup(
+            pnl_NavAboutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_NavAboutLayout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        pnl_AboutLayout.setVerticalGroup(
-            pnl_AboutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnl_AboutLayout.createSequentialGroup()
+        pnl_NavAboutLayout.setVerticalGroup(
+            pnl_NavAboutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_NavAboutLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jLabel10)
                 .addContainerGap(20, Short.MAX_VALUE))
@@ -338,40 +339,32 @@ public class BudgetAppX extends javax.swing.JFrame {
         pnl_NavBar.setLayout(pnl_NavBarLayout);
         pnl_NavBarLayout.setHorizontalGroup(
             pnl_NavBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnl_Transactions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(pnl_BudSum, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(pnl_MainDashB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(pnl_Settings, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(pnl_About, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnl_NavTransactions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnl_NavBudSum, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnl_NavMainDashB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnl_NavSettings, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnl_NavAbout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         pnl_NavBarLayout.setVerticalGroup(
             pnl_NavBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_NavBarLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(pnl_MainDashB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnl_NavMainDashB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(pnl_Transactions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnl_NavTransactions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(pnl_BudSum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnl_NavBudSum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(95, 95, 95)
-                .addComponent(pnl_Settings, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnl_NavSettings, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(pnl_About, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnl_NavAbout, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(86, 86, 86))
         );
 
         pnl_Container.setBackground(new java.awt.Color(0, 0, 0));
-
-        javax.swing.GroupLayout pnl_ContainerLayout = new javax.swing.GroupLayout(pnl_Container);
-        pnl_Container.setLayout(pnl_ContainerLayout);
-        pnl_ContainerLayout.setHorizontalGroup(
-            pnl_ContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 802, Short.MAX_VALUE)
-        );
-        pnl_ContainerLayout.setVerticalGroup(
-            pnl_ContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 659, Short.MAX_VALUE)
-        );
+        pnl_Container.setForeground(new java.awt.Color(255, 255, 255));
+        pnl_Container.setMinimumSize(new java.awt.Dimension(802, 659));
+        pnl_Container.setLayout(new java.awt.CardLayout());
 
         javax.swing.GroupLayout pnl_BackgroundLayout = new javax.swing.GroupLayout(pnl_Background);
         pnl_Background.setLayout(pnl_BackgroundLayout);
@@ -389,9 +382,7 @@ public class BudgetAppX extends javax.swing.JFrame {
                 .addComponent(pnl_TitleBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(pnl_BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnl_NavBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(pnl_BackgroundLayout.createSequentialGroup()
-                        .addGap(0, 0, 0)
-                        .addComponent(pnl_Container, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addComponent(pnl_Container, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -435,44 +426,44 @@ public class BudgetAppX extends javax.swing.JFrame {
     }//GEN-LAST:event_pnl_TitleBarMouseDragged
     
     // ----- NAVIGATION BAR - MOUSE ENTERED ------ //
-    private void pnl_MainDashBMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_MainDashBMouseEntered
+    private void pnl_NavMainDashBMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_NavMainDashBMouseEntered
         evt.getComponent().setBackground(new Color(66, 66, 66));
-    }//GEN-LAST:event_pnl_MainDashBMouseEntered
+    }//GEN-LAST:event_pnl_NavMainDashBMouseEntered
     
     // ----- NAVIGATION BAR - MOUSE EXIT  ------ //
     
-    private void pnl_MainDashBMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_MainDashBMouseExited
+    private void pnl_NavMainDashBMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_NavMainDashBMouseExited
         java.awt.Point p = new java.awt.Point(evt.getLocationOnScreen());
         SwingUtilities.convertPointFromScreen(p, evt.getComponent());
         if(evt.getComponent().contains(p)){
             return;
         }
         evt.getComponent().setBackground(new Color(32, 32, 32));
-    }//GEN-LAST:event_pnl_MainDashBMouseExited
+    }//GEN-LAST:event_pnl_NavMainDashBMouseExited
 
     
     // ----- NAVIGATION BAR - MOUSE CLICK  ------ //
-    private void pnl_MainDashBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_MainDashBMouseClicked
-        navbtn_OnClick(evt, pnl_MainDashB);
-    }//GEN-LAST:event_pnl_MainDashBMouseClicked
+    private void pnl_NavMainDashBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_NavMainDashBMouseClicked
+        navbtn_OnClick(evt, pnl_NavMainDashB, 'm');
+    }//GEN-LAST:event_pnl_NavMainDashBMouseClicked
 
-    private void pnl_BudSumMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_BudSumMouseClicked
-        navbtn_OnClick(evt, pnl_BudSum);
-    }//GEN-LAST:event_pnl_BudSumMouseClicked
+    private void pnl_NavBudSumMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_NavBudSumMouseClicked
+        navbtn_OnClick(evt, pnl_NavBudSum, 'b');
+    }//GEN-LAST:event_pnl_NavBudSumMouseClicked
 
-    private void pnl_SettingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_SettingsMouseClicked
-        navbtn_OnClick(evt, pnl_Settings);
-    }//GEN-LAST:event_pnl_SettingsMouseClicked
+    private void pnl_NavSettingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_NavSettingsMouseClicked
+        navbtn_OnClick(evt, pnl_NavSettings, 's');
+    }//GEN-LAST:event_pnl_NavSettingsMouseClicked
 
-    private void pnl_AboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_AboutMouseClicked
-        navbtn_OnClick(evt, pnl_About);
-    }//GEN-LAST:event_pnl_AboutMouseClicked
+    private void pnl_NavAboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_NavAboutMouseClicked
+        navbtn_OnClick(evt, pnl_NavAbout, 'a');
+    }//GEN-LAST:event_pnl_NavAboutMouseClicked
 
     // ----- NAVIGATION BAR - MOUSE CLICKED ------ //
     
-    private void pnl_TransactionsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_TransactionsMouseClicked
-        navbtn_OnClick(evt, pnl_Transactions);
-    }//GEN-LAST:event_pnl_TransactionsMouseClicked
+    private void pnl_NavTransactionsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_NavTransactionsMouseClicked
+        navbtn_OnClick(evt, pnl_NavTransactions, 't');
+    }//GEN-LAST:event_pnl_NavTransactionsMouseClicked
     
     
     
@@ -480,14 +471,46 @@ public class BudgetAppX extends javax.swing.JFrame {
     
     
     // Navigation Bar - Mouse Clicked
-    private void navbtn_OnClick(MouseEvent evt, JPanel pnl){
-        pnl_MainDashB.setBorder(createEmptyBorder(0, 5, 0, 0));
-        pnl_Transactions.setBorder(createEmptyBorder(0, 5, 0, 0));
-        pnl_BudSum.setBorder(createEmptyBorder(0, 5, 0, 0));
-        pnl_Settings.setBorder(createEmptyBorder(0, 5, 0, 0));
-        pnl_About.setBorder(createEmptyBorder(0, 5, 0, 0));
+    private void navbtn_OnClick(MouseEvent evt, JPanel pnl, char Navigation){
         
+        //Change Color of Selected Panel
+        pnl_NavMainDashB.setBorder(createEmptyBorder(0, 5, 0, 0));
+        pnl_NavTransactions.setBorder(createEmptyBorder(0, 5, 0, 0));
+        pnl_NavBudSum.setBorder(createEmptyBorder(0, 5, 0, 0));
+        pnl_NavSettings.setBorder(createEmptyBorder(0, 5, 0, 0));
+        pnl_NavAbout.setBorder(createEmptyBorder(0, 5, 0, 0));
         pnl.setBorder(createMatteBorder(0, 5, 0, 0, new Color(252,215,54)));
+        
+        //Add and Repaint Panel on Main Container
+        pnl_Container.removeAll();
+        pnl_Container.repaint();
+        pnl_Container.revalidate();
+        
+        JPanel pnl_Selected = null;
+        switch(Navigation){
+            case 'm':
+                pnl_Selected = new MainDashBPanel();
+                break;
+            case 't':
+                
+                pnl_Selected = new TransactionsPanel();
+                break;
+            case 'b':
+                pnl_Selected = new BudgetSummaryPanel();
+                break;
+            case 's':
+                pnl_Selected = new SettingsPanel();
+                break;
+            case 'a':
+                pnl_Selected = new AboutPanel();
+                break;
+            default:
+        }
+        
+        
+        pnl_Container.add(pnl_Selected);
+        pnl_Container.repaint();
+        pnl_Container.revalidate();
         
     }
     
@@ -534,20 +557,18 @@ public class BudgetAppX extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JLabel lb_Exit;
     private javax.swing.JLabel lb_Minimize;
-    private javax.swing.JPanel pnl_About;
     private javax.swing.JPanel pnl_Background;
-    private javax.swing.JPanel pnl_BudSum;
     private javax.swing.JPanel pnl_Container;
-    private javax.swing.JPanel pnl_MainDashB;
+    private javax.swing.JPanel pnl_NavAbout;
     private javax.swing.JPanel pnl_NavBar;
-    private javax.swing.JPanel pnl_Settings;
+    private javax.swing.JPanel pnl_NavBudSum;
+    private javax.swing.JPanel pnl_NavMainDashB;
+    private javax.swing.JPanel pnl_NavSettings;
+    private javax.swing.JPanel pnl_NavTransactions;
     private javax.swing.JPanel pnl_Title;
     private javax.swing.JPanel pnl_TitleBar;
-    private javax.swing.JPanel pnl_Transactions;
     // End of variables declaration//GEN-END:variables
 }
