@@ -7,6 +7,7 @@ package mainpackage;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.text.ParseException;
 import javax.swing.*;
 import static javax.swing.BorderFactory.*;
 
@@ -492,9 +493,22 @@ public class BudgetAppX extends javax.swing.JFrame {
                 pnl_Selected = new MainDashBPanel();
                 break;
             case 't':
+                TransactionsPanel tpnl = new TransactionsPanel();
+                pnl_Selected = tpnl;
                 
-                pnl_Selected = new TransactionsPanel();
+                try{
+                    tpnl.validateDataSource();
+                    tpnl.refreshData();
+                    tpnl.repopulateTable();
+                }catch(ParseException e){
+                    System.out.println(e.getMessage());
+                }
+                
+                
+                
+                
                 break;
+
             case 'b':
                 pnl_Selected = new BudgetSummaryPanel();
                 break;
