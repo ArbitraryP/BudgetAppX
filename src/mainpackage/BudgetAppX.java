@@ -495,18 +495,10 @@ public class BudgetAppX extends javax.swing.JFrame {
             case 't':
                 TransactionsPanel tpnl = new TransactionsPanel();
                 pnl_Selected = tpnl;
-                
-                try{
-                    tpnl.validateDataSource();
+                if(tpnl.validateDataSource()){
                     tpnl.refreshData();
                     tpnl.repopulateTable();
-                }catch(ParseException e){
-                    System.out.println(e.getMessage());
                 }
-                
-                
-                
-                
                 break;
 
             case 'b':
