@@ -71,20 +71,33 @@ public class TransactionsPanel extends javax.swing.JPanel {
         tbl_TransTable.setForeground(new java.awt.Color(255, 255, 255));
         tbl_TransTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Date", "Item", "Category", "Amount", "Savings"
+                "ID#", "Date", "Item", "Category", "Amount", "Savings"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tbl_TransTable.setIntercellSpacing(new java.awt.Dimension(20, 20));
         tbl_TransTable.setRowHeight(40);
+        tbl_TransTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tbl_TransTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(tbl_TransTable);
+        if (tbl_TransTable.getColumnModel().getColumnCount() > 0) {
+            tbl_TransTable.getColumnModel().getColumn(0).setPreferredWidth(5);
+        }
 
         pnl_Add.setBackground(new java.awt.Color(0, 0, 0));
         pnl_Add.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
@@ -268,13 +281,62 @@ public class TransactionsPanel extends javax.swing.JPanel {
     
     // ----- DELETE BUTTON - MOUSE CLICKED ------ //
     private void lb_DeleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_DeleteMouseClicked
-        // TODO add your handling code here:
+        //must have selected a columnn
+        //asks for confirmation
+        //revallidate (refresh and repopulate if invalid)
+        //search and remove from stack, rearrange stack and rewrite file
+        //refresh and repopulate
+        
+        
+        int selectedtablerow = tbl_TransTable.getSelectedRow();
+        if(selectedtablerow == -1){
+            JOptionPane.showMessageDialog(null,"No Transaction Selected");
+        }else{
+            if(JOptionPane.showConfirmDialog (null, "Are you sure you want to delete transaction?\nThis action cannot be undone","Warning",JOptionPane.YES_NO_OPTION)
+                    == JOptionPane.YES_OPTION){
+                //ANSWERED YES: Remove item from stack, rewrite file
+                if(validateDataSource()){
+                    
+                    int selectedid = Integer.parseInt(tbl_TransTable.getValueAt(selectedtablerow, 0).toString());
+                    
+                    stk_ID.remove(selectedid-1);
+                    stk_Date.remove(selectedid-1);
+                    stk_Item.remove(selectedid-1); 
+                    stk_Category.remove(selectedid-1);
+                    stk_Amount.remove(selectedid-1);
+                    stk_Savings.remove(selectedid-1); 
+                    
+                    //update ID value in stack
+                    for(int x = 0; x < stk_ID.size() ;x++){
+                        stk_ID.set(x, x+1);
+                    }
+                    repopulateTable();
+                    
+                    //Write to File
+                    saveDataSource();
+                    
+                    
+                    
+                    
+                }
+                
+            }else{
+                //Do nothing
+            }
+        }
+        
+        
+        
     }//GEN-LAST:event_lb_DeleteMouseClicked
 
     
     // ----- REFRESH BUTTON - MOUSE CLICKED ------ //
     private void lb_RefreshMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_RefreshMouseClicked
-        // TODO add your handling code here:
+        if(validateDataSource()){
+            refreshData();
+            repopulateTable();
+        }
+        
     }//GEN-LAST:event_lb_RefreshMouseClicked
 
     
@@ -302,11 +364,12 @@ public class TransactionsPanel extends javax.swing.JPanel {
     }
     
     // ----- REFRESHES THE STACK VALUES ------ //
-    public void refreshData() throws ParseException{
+    public void refreshData(){
         //Assumes File is valid. check validDataSource()
         //Reset Values of Stack
         //Reads File Assigns it on a STACK then Displays it on the Table
         
+        stk_ID = new Stack();
         stk_Date = new Stack();
         stk_Item = new Stack();
         stk_Category = new Stack();
@@ -324,22 +387,42 @@ public class TransactionsPanel extends javax.swing.JPanel {
             while ((int_ctr = flr_Reader.read()) != -1) {
                 chr_txt = (char) int_ctr;
                 switch(int_fieldselector){
-                    case 0: //Date
+                    
+                    case 0: //ID
+                        //Append to ID
+                        while(chr_txt != ','){
+                            //get char, put to temp, push to stack
+                            str_TmpData = str_TmpData + chr_txt;
+                            continue loop; 
+                        }
+                        stk_ID.push( Integer.parseInt(str_TmpData) );
+                        str_TmpData = "";
+                        int_fieldselector++;
+                        
+                        break;
+                        
+                    case 1: //Date
                         //Append to Date
                         while(chr_txt != ',' ){
                             //get char, put to temp, push to stack
                             str_TmpData = str_TmpData + chr_txt;
                             continue loop;   
                         }
-                        stk_Date.push( new SimpleDateFormat("yyyy-mm-dd hh:mm:ss").parse(str_TmpData) );
+                        try{
+                            stk_Date.push( new SimpleDateFormat("yyyy-mm-dd hh:mm:ss").parse(str_TmpData) );
+                        }catch(ParseException e){
+                            System.out.println(e.getMessage());
+                        }
+                        
                         
                         str_TmpData = "";
                         int_fieldselector++;
                         
                         
                         break;
+
                         
-                    case 1: //Item
+                    case 2: //Item
                         //Append to Item
                         while(chr_txt != ','){
                             //get char, put to temp, push to stack
@@ -354,7 +437,7 @@ public class TransactionsPanel extends javax.swing.JPanel {
                         
                         break;
                         
-                    case 2: //Category
+                    case 3: //Category
                         //Append to Category
                         while(chr_txt != ','){
                             //get char, put to temp, push to stack
@@ -367,7 +450,7 @@ public class TransactionsPanel extends javax.swing.JPanel {
                         int_fieldselector++;
                         
                         break;
-                    case 3: //Amount
+                    case 4: //Amount
                         //Append to Amount
                         while(chr_txt != ','){
                             //get char, put to temp, push to stack
@@ -382,7 +465,7 @@ public class TransactionsPanel extends javax.swing.JPanel {
                         
                         break;
                         
-                    case 4: //Savings
+                    case 5: //Savings
                         //Append to Savings
                         while(chr_txt != ';'){
                             //get char, put to temp, push to stack
@@ -402,11 +485,16 @@ public class TransactionsPanel extends javax.swing.JPanel {
                 }//end of switch
                 
             }//end of while
+            
+            /*
+            Used for debugging
+            System.out.println("IDs: " + stk_ID);
             System.out.println("Dates: " + stk_Date);
             System.out.println("Items: " + stk_Item);
             System.out.println("Categories: " + stk_Category);
             System.out.println("Amount: " + stk_Amount);
             System.out.println("Savings: " + stk_Savings);
+            */
             
             if(flr_Reader!=null){
                 flr_Reader.close();
@@ -422,11 +510,72 @@ public class TransactionsPanel extends javax.swing.JPanel {
     // ----- REPOPULATES THE TABLE WITH STACK VALUES ------ //
     public void repopulateTable(){
         
+        DefaultTableModel dtmodel = (DefaultTableModel) tbl_TransTable.getModel();
+        dtmodel.getDataVector().removeAllElements();
+        revalidate();
         
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<DefaultTableModel>(dtmodel);
+        tbl_TransTable.setRowSorter(sorter);
+        
+        Object rowData[] = new Object[6];
+        for(int i = stk_Date.size()-1; i >= 0; i--)
+        {
+            rowData[0] = String.format("%03d", stk_ID.get(i));
+            rowData[1] = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss a").format(stk_Date.get(i));
+            rowData[2] = stk_Item.get(i);
+            rowData[3] = stk_Category.get(i);
+            rowData[4] = stk_Amount.get(i);
+            rowData[5] = stk_Savings.get(i);
+            dtmodel.addRow(rowData);
+        }
         
     }
     
     
+    // ----- SAVES THE STACK VALUES ITO THE DATA SOURCE FILE------ //
+    private void saveDataSource(){
+        //This methods assumes valid file
+        //directly saves all stack values into the file
+        
+        
+        fl_DataSource = SettingsClass.getDataSource();
+        try{
+            flw_Writer = new FileWriter(fl_DataSource);
+
+            //Store everting in a strng
+            String texts = "";
+            
+            //traverse through all stacks
+            for(int x = 0; x < stk_ID.size() ;x++){
+                
+                texts = texts +
+                        stk_ID.get(x) + ',' +
+                        new SimpleDateFormat("yyyy-mm-dd hh:mm:ss").format(stk_Date.get(x)) + ',' +
+                        stk_Item.get(x) + ',' +
+                        stk_Category.get(x) + ',' +
+                        stk_Amount.get(x) + ',' +
+                        stk_Savings.get(x) + ";\n";
+                
+                
+                
+            }
+            
+            for(char x : texts.toCharArray()) {
+                flw_Writer.write(x);
+
+            }
+
+
+            if (flw_Writer!= null){
+                flw_Writer.close();
+            }
+
+        }catch(IOException e){
+            System.out.println(e.getMessage());
+        }
+
+        
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -450,6 +599,7 @@ public class TransactionsPanel extends javax.swing.JPanel {
     private int int_fieldselector;
     private String str_TmpData = "";
     
+    private static Stack<Integer> stk_ID = new Stack<>();
     private static Stack<Date> stk_Date = new Stack<Date>();
     private static Stack<String> stk_Item = new Stack();
     private static Stack<String> stk_Category = new Stack();
