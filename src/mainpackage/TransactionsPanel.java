@@ -17,7 +17,9 @@ import javax.swing.table.*;
 import java.io.*;
 import java.text.*;
 import java.util.*;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import mainpackage.AddEditForm;
 
 public class TransactionsPanel extends javax.swing.JPanel {
 
@@ -269,13 +271,36 @@ public class TransactionsPanel extends javax.swing.JPanel {
     
     // ----- ADD BUTTON - MOUSE CLICKED ------ //
     private void lb_AddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_AddMouseClicked
-        JOptionPane.showMessageDialog(this,"Hello");  
+        
+        AddEditForm jdf_AddEdit = new AddEditForm(parentFrame, true, this);
+        jdf_AddEdit.setVisible(true);
+        
+        
     }//GEN-LAST:event_lb_AddMouseClicked
     
 
     // ----- EDIT BUTTON - MOUSE CLICKED ------ //
     private void lb_EditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_EditMouseClicked
-        // TODO add your handling code here:
+        int selectedtablerow = tbl_TransTable.getSelectedRow();
+        if(selectedtablerow == -1){
+            JOptionPane.showMessageDialog(null,"No Transaction Selected");
+        }else{
+            int selectedid = Integer.parseInt(tbl_TransTable.getValueAt(selectedtablerow, 0).toString());
+            String selecteditem = tbl_TransTable.getValueAt(selectedtablerow, 2).toString();
+            String selectedcategory = tbl_TransTable.getValueAt(selectedtablerow, 3).toString();
+            String datetmp = tbl_TransTable.getValueAt(selectedtablerow, 1).toString();
+            Date selecteddate = null;
+            try {
+                selecteddate = new SimpleDateFormat("dd/MM/yyyy E").parse(datetmp);
+            } catch (ParseException ex) {
+                Logger.getLogger(TransactionsPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            double selectedamount = Double.parseDouble(tbl_TransTable.getValueAt(selectedtablerow, 4).toString());
+                    
+            AddEditForm jdf_AddEdit = new AddEditForm(parentFrame, true, this, selectedid, selecteditem, selectedcategory, selecteddate, selectedamount);
+            jdf_AddEdit.setVisible(true);
+            
+        }
     }//GEN-LAST:event_lb_EditMouseClicked
 
     
@@ -409,7 +434,7 @@ public class TransactionsPanel extends javax.swing.JPanel {
                             continue loop;   
                         }
                         try{
-                            stk_Date.push( new SimpleDateFormat("yyyy-mm-dd hh:mm:ss").parse(str_TmpData) );
+                            stk_Date.push( new SimpleDateFormat("dd/MM/yyyy E").parse(str_TmpData) );
                         }catch(ParseException e){
                             System.out.println(e.getMessage());
                         }
@@ -521,7 +546,7 @@ public class TransactionsPanel extends javax.swing.JPanel {
         for(int i = stk_Date.size()-1; i >= 0; i--)
         {
             rowData[0] = String.format("%03d", stk_ID.get(i));
-            rowData[1] = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss a").format(stk_Date.get(i));
+            rowData[1] = new SimpleDateFormat("dd/MM/yyyy E").format(stk_Date.get(i));
             rowData[2] = stk_Item.get(i);
             rowData[3] = stk_Category.get(i);
             rowData[4] = stk_Amount.get(i);
@@ -550,7 +575,7 @@ public class TransactionsPanel extends javax.swing.JPanel {
                 
                 texts = texts +
                         stk_ID.get(x) + ',' +
-                        new SimpleDateFormat("yyyy-mm-dd hh:mm:ss").format(stk_Date.get(x)) + ',' +
+                        new SimpleDateFormat("dd/MM/yyyy E").format(stk_Date.get(x)) + ',' +
                         stk_Item.get(x) + ',' +
                         stk_Category.get(x) + ',' +
                         stk_Amount.get(x) + ',' +
@@ -605,4 +630,6 @@ public class TransactionsPanel extends javax.swing.JPanel {
     private static Stack<String> stk_Category = new Stack();
     private static Stack<Double> stk_Amount = new Stack();
     private static Stack<Double> stk_Savings = new Stack();
+    
+    public JFrame parentFrame;
 }

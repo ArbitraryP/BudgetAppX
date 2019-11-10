@@ -16,8 +16,7 @@ import static javax.swing.BorderFactory.*;
  * @author Ivan Flavano
  */
 public class BudgetAppX extends javax.swing.JFrame {
-    private String selectedTab = "";
-    private int x,y;
+    
     
     /**
      * Creates new form BudgetAppX
@@ -54,6 +53,7 @@ public class BudgetAppX extends javax.swing.JFrame {
         pnl_Container = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Rudy Coins");
         setBackground(new java.awt.Color(0, 0, 0));
         setUndecorated(true);
         setResizable(false);
@@ -498,6 +498,7 @@ public class BudgetAppX extends javax.swing.JFrame {
                 if(tpnl.validateDataSource()){
                     tpnl.refreshData();
                     tpnl.repopulateTable();
+                    tpnl.parentFrame = this;
                 }
                 break;
 
@@ -577,4 +578,6 @@ public class BudgetAppX extends javax.swing.JFrame {
     private javax.swing.JPanel pnl_Title;
     private javax.swing.JPanel pnl_TitleBar;
     // End of variables declaration//GEN-END:variables
+    private String selectedTab = "";
+    private int x,y;
 }
