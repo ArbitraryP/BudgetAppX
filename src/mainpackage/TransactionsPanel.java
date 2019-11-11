@@ -96,6 +96,7 @@ public class TransactionsPanel extends javax.swing.JPanel {
         tbl_TransTable.setRowHeight(40);
         tbl_TransTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tbl_TransTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tbl_TransTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tbl_TransTable);
         if (tbl_TransTable.getColumnModel().getColumnCount() > 0) {
             tbl_TransTable.getColumnModel().getColumn(0).setPreferredWidth(5);
@@ -274,7 +275,7 @@ public class TransactionsPanel extends javax.swing.JPanel {
         
         AddEditForm jdf_AddEdit = new AddEditForm(parentFrame, true, this);
         jdf_AddEdit.setVisible(true);
-        
+        jdf_AddEdit.setParentPanel(this);
         
     }//GEN-LAST:event_lb_AddMouseClicked
     
@@ -299,7 +300,7 @@ public class TransactionsPanel extends javax.swing.JPanel {
                     
             AddEditForm jdf_AddEdit = new AddEditForm(parentFrame, true, this, selectedid, selecteditem, selectedcategory, selecteddate, selectedamount);
             jdf_AddEdit.setVisible(true);
-            
+            jdf_AddEdit.setParentPanel(this);
         }
     }//GEN-LAST:event_lb_EditMouseClicked
 
@@ -317,7 +318,7 @@ public class TransactionsPanel extends javax.swing.JPanel {
         if(selectedtablerow == -1){
             JOptionPane.showMessageDialog(null,"No Transaction Selected");
         }else{
-            if(JOptionPane.showConfirmDialog (null, "Are you sure you want to delete transaction?\nThis action cannot be undone","Warning",JOptionPane.YES_NO_OPTION)
+            if(JOptionPane.showConfirmDialog (null, "Are you sure you want to delete transaction?\nThis action cannot be undone","Thrifty Coins",JOptionPane.YES_NO_OPTION)
                     == JOptionPane.YES_OPTION){
                 //ANSWERED YES: Remove item from stack, rewrite file
                 if(validateDataSource()){
@@ -378,7 +379,7 @@ public class TransactionsPanel extends javax.swing.JPanel {
         File test = SettingsClass.getDataSource();
         
         if ( !test.exists() || !test.isFile() || test == null ){
-            JOptionPane.showMessageDialog(this,"Data source not found. To fix go to:\nSettings > Data Source","Alert",JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this,"Data source not found. To fix go to:\nSettings > Data Source","Thrifty Coins",JOptionPane.WARNING_MESSAGE);
             return false;
             
         } else {
@@ -408,6 +409,7 @@ public class TransactionsPanel extends javax.swing.JPanel {
             //Traverse through all text content
             //starts from 0 field selector... 0 date, 1 item, 2 category, 3 amount, 4 savings
             int_fieldselector = 0;
+            str_TmpData = "";
             loop:
             while ((int_ctr = flr_Reader.read()) != -1) {
                 chr_txt = (char) int_ctr;
@@ -415,12 +417,15 @@ public class TransactionsPanel extends javax.swing.JPanel {
                     
                     case 0: //ID
                         //Append to ID
+                        
                         while(chr_txt != ','){
                             //get char, put to temp, push to stack
                             str_TmpData = str_TmpData + chr_txt;
                             continue loop; 
                         }
+                        System.out.println(str_TmpData);
                         stk_ID.push( Integer.parseInt(str_TmpData) );
+                        
                         str_TmpData = "";
                         int_fieldselector++;
                         
@@ -500,7 +505,7 @@ public class TransactionsPanel extends javax.swing.JPanel {
                         stk_Savings.push( Double.parseDouble(str_TmpData) );
                         
                         int_ctr = flr_Reader.read();//Skips the Semicolon
-                        int_ctr = flr_Reader.read();//Skips the Breakline
+                        
                         str_TmpData = "";
                         int_fieldselector = 0;
                         
@@ -553,12 +558,13 @@ public class TransactionsPanel extends javax.swing.JPanel {
             rowData[5] = stk_Savings.get(i);
             dtmodel.addRow(rowData);
         }
-        
+        tbl_TransTable.getRowSorter().toggleSortOrder(1); 
+        tbl_TransTable.getRowSorter().toggleSortOrder(1); //two time to set as descending
     }
     
     
     // ----- SAVES THE STACK VALUES ITO THE DATA SOURCE FILE------ //
-    private void saveDataSource(){
+    protected void saveDataSource(){
         //This methods assumes valid file
         //directly saves all stack values into the file
         
@@ -624,12 +630,12 @@ public class TransactionsPanel extends javax.swing.JPanel {
     private int int_fieldselector;
     private String str_TmpData = "";
     
-    private static Stack<Integer> stk_ID = new Stack<>();
-    private static Stack<Date> stk_Date = new Stack<Date>();
-    private static Stack<String> stk_Item = new Stack();
-    private static Stack<String> stk_Category = new Stack();
-    private static Stack<Double> stk_Amount = new Stack();
-    private static Stack<Double> stk_Savings = new Stack();
+    protected Stack<Integer> stk_ID = new Stack<>();
+    protected Stack<Date> stk_Date = new Stack<Date>();
+    protected Stack<String> stk_Item = new Stack();
+    protected Stack<String> stk_Category = new Stack();
+    protected Stack<Double> stk_Amount = new Stack();
+    protected Stack<Double> stk_Savings = new Stack();
     
     public JFrame parentFrame;
 }

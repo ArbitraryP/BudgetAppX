@@ -6,10 +6,14 @@
 package mainpackage;
 
 import java.awt.*;
+import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import javax.swing.*;
-import javax.swing.border.*;
-import java.lang.Math;
+
+import java.time.*;
+import static mainpackage.TransactionsPanel.*;
+
 /**
  *
  * @author Ivan Flavano
@@ -144,13 +148,23 @@ public class AddEditForm extends javax.swing.JDialog {
         });
 
         cmb_Categories.setBackground(new java.awt.Color(0, 0, 0));
+        cmb_Categories.setEditable(true);
         cmb_Categories.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         cmb_Categories.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Car", "Entertainment", "Household", "Utilities", "Salary", "Others" }));
         cmb_Categories.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)), javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 10)));
+        cmb_Categories.setSelectedItem("Category");
+        cmb_Categories.setEditable(false);
 
         jxd_Date.setToolTipText("");
         jxd_Date.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jxd_Date.setFormats("dd/MM/yyyy E");
+        jxd_Date.getEditor().setEditable(false);
+        //jxd_Date.getEditor().setText("Date");
+
+        LocalDateTime now = LocalDateTime.now();
+        ZonedDateTime zdt = now.atZone(ZoneId.systemDefault());
+        Date output = Date.from(zdt.toInstant());
+        jxd_Date.setDate(output);
 
         pnl_Toggle.setBackground(new java.awt.Color(200, 0, 0));
         pnl_Toggle.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEmptyBorder(2, 2, 2, 2), javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15)));
@@ -234,6 +248,11 @@ public class AddEditForm extends javax.swing.JDialog {
         txt_Amount.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
         txt_Amount.setText("0.00");
         txt_Amount.setFont(new java.awt.Font("Roboto Light", 0, 14)); // NOI18N
+        txt_Amount.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txt_AmountFocusLost(evt);
+            }
+        });
         txt_Amount.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txt_AmountKeyTyped(evt);
@@ -303,14 +322,14 @@ public class AddEditForm extends javax.swing.JDialog {
     private void pnl_TitleBarMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_TitleBarMouseDragged
         int xx = evt.getXOnScreen();
         int yy = evt.getYOnScreen();
-        setLocation(xx-x, yy-y);
+        setLocation(xx-formAxisX, yy-formAxisY);
 
     }//GEN-LAST:event_pnl_TitleBarMouseDragged
     
     //MOVE WINDOW PRESS
     private void pnl_TitleBarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_TitleBarMousePressed
-        x = evt.getX();
-        y = evt.getY();
+        formAxisX = evt.getX();
+        formAxisY = evt.getY();
     }//GEN-LAST:event_pnl_TitleBarMousePressed
     
     // ----- ANSWER - MOUSE ENTERED ------ //
@@ -354,6 +373,9 @@ public class AddEditForm extends javax.swing.JDialog {
         
     }//GEN-LAST:event_pnl_ToggleMouseClicked
 
+    
+    
+    // ----- DATA VALIDATION - TXT AMOUNT ------ //
     private void txt_AmountKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_AmountKeyTyped
         // TODO add your handling code here:
         char c=evt.getKeyChar();
@@ -363,27 +385,21 @@ public class AddEditForm extends javax.swing.JDialog {
             evt.consume();
         }
     }//GEN-LAST:event_txt_AmountKeyTyped
-
+    
+    
+    // ----- DATA VALIDATION - TXT ITEM ------ //
     private void txt_ItemKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_ItemKeyTyped
         char c=evt.getKeyChar();
-        if( !Character.isLetter(c)  && !evt.isAltDown()){
+        if( !Character.isLetter(c) && !Character.isDigit(c) && c != ' ' && !evt.isAltDown()){
             evt.consume();
         }
     }//GEN-LAST:event_txt_ItemKeyTyped
 
     
-    // --------- TEXT BOX LOST FOCUS REMOVE ALL BAD CHARS
+    // --------- DATA VALIDATION - TEXT BOX LOST FOCUS REMOVE ALL BAD CHARS ------ //
     private void txt_ItemFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_ItemFocusLost
-        String cont = txt_Item.getText();
-        StringBuilder sb = new StringBuilder(cont);
-        
-        for(int x = 0; x < sb.length(); x++){
-            if( !Character.isLetter(sb.charAt(x)) ){
-                sb.deleteCharAt(x);
-                x--;
-            }
-        }
-        txt_Item.setText(sb.toString());        
+        autoValidateItem();
+              
     }//GEN-LAST:event_txt_ItemFocusLost
     
     //CANCEL IS CLICKED
@@ -392,10 +408,41 @@ public class AddEditForm extends javax.swing.JDialog {
         dispose();
     }//GEN-LAST:event_lb_CancelMouseClicked
     
-    //SUBMIT IS CLICKED
+    
+    // ------ SUBMIT IS CLICKED ------ //
     private void lb_SubmitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_SubmitMouseClicked
-        // TODO add your handling code here:
+        
+        //Run AutoValidation Methods for data validation
+        autoValidateItem();
+        autoValidateAmount();
+        
+        
+        System.out.println(fieldsAreValid());
+        if(!fieldsAreValid()){
+            JOptionPane.showMessageDialog(null,"No Category Selected");
+        }else{
+            if(JOptionPane.showConfirmDialog (null, "Confirm Submission?","Thrifty Coins",JOptionPane.YES_NO_OPTION)
+                    == JOptionPane.YES_OPTION){
+                
+                //Call Add/Edit Method
+                submitTransaction();
+                dispose();
+                parentPanel.repopulateTable();
+                
+            }
+            
+            
+        }
+        
+        
     }//GEN-LAST:event_lb_SubmitMouseClicked
+    
+    
+    // --------- DATA VALIDATION - TEXT BOX LOST FOCUS REVERT TO ZERO ------ //
+    private void txt_AmountFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_AmountFocusLost
+        autoValidateAmount();
+        
+    }//GEN-LAST:event_txt_AmountFocusLost
 
     /**
      * @param args the command line arguments
@@ -440,7 +487,14 @@ public class AddEditForm extends javax.swing.JDialog {
     }
     
     
+    
     // ------------------------ CUSTOM METHODS ------------------------ //
+    
+    //SetParentPanel
+    public void setParentPanel(TransactionsPanel panel){
+        parentPanel = panel;
+    }
+    
     public void toggleSymbol(){
         if(isExpense){
             lb_Toggle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainpackage/res/icons/round_add_white_18dp small.png")));
@@ -453,12 +507,130 @@ public class AddEditForm extends javax.swing.JDialog {
         }
     }
     
+    public void autoValidateItem(){
+        String cont = txt_Item.getText();
+        StringBuilder sb = new StringBuilder(cont);
+        
+        for(int x = 0; x < sb.length(); x++){
+            if( !Character.isLetter(sb.charAt(x)) && !Character.isDigit(sb.charAt(x)) && sb.charAt(x) != ' '){
+                sb.deleteCharAt(x);
+                x--;
+            }
+        }
+        txt_Item.setText(sb.toString());  
+    }
+    
+    public void autoValidateAmount(){
+        String cont = txt_Amount.getText();
+        boolean isDouble = true;
+        try{
+          Double.parseDouble(cont);
+        }
+        catch(NumberFormatException e){
+          isDouble = false;
+        }
+        if(cont.equals("") || !isDouble){
+            txt_Amount.setText("0.00");  
+        }
+    }
+    
+    private boolean fieldsAreValid(){
+        // Check if Category is Set
+        String category = cmb_Categories.getSelectedItem().toString();
+        return !(category.equals("Category"));
+    }
+    
+    
+    
+    
+    
+    // -------------------  MAIN ADD/EDIT METHOD ------------------- //
+    private void submitTransaction(){
+        
+        
+        
+        int useID = -1;
+        String useItem = txt_Item.getText();
+        String useCategory = cmb_Categories.getSelectedItem().toString();
+        Date useDate = jxd_Date.getDate();
+        double useAmount = Double.parseDouble(txt_Amount.getText());
+        
+        
+        
+        // SET ID VALUE... if last.. use -1 instead
+        if(isEditing){
+            useID = editingID;
+            
+        }else{ // SET ID VALUE BASED ON DATE
+            //loop to traverse all Dates
+            for(int i = parentPanel.stk_Date.size()-1; i >= 0; i--){
+                //Checks if greater
+                if( useDate.compareTo(parentPanel.stk_Date.get(i)) >= 0){
+                    //Checks if last by date
+                    if(i==parentPanel.stk_Date.size()-1){
+                        useID = -1; //latest.. so use push instead
+                        
+                    }else{
+                        useID = i+1; //place it after the target
+                        break;
+                    }
+                    
+                }
+            }
+        }
+        
+        // SET AMOUNT VALUE IF POSITIVE OR NEGATIVE
+        if(isExpense){
+            useAmount *= -1;
+        }
+        
+        
+        // PUT ALL DATA IN STACK
+        if(useID == -1){ //use push
+            parentPanel.stk_ID.push(parentPanel.stk_ID.size()+1);
+            parentPanel.stk_Date.push(useDate);
+            parentPanel.stk_Item.push(useItem);
+            parentPanel.stk_Category.push(useCategory);
+            parentPanel.stk_Amount.push(useAmount);
+            parentPanel.stk_Savings.push(0.0);
+            
+        }else{ //Add 
+            parentPanel.stk_ID.add(useID-1, useID);
+            parentPanel.stk_Date.add(useID-1, useDate);
+            parentPanel.stk_Item.add(useID-1, useItem);
+            parentPanel.stk_Category.add(useID-1, useCategory);
+            parentPanel.stk_Amount.add(useID-1, useAmount);
+            parentPanel.stk_Savings.add(useID-1, 0.0);
+            
+        }
+        
+        recalculateIDandSavings();
+        parentPanel.saveDataSource();
+        
+        
+    }
+    
+    // ------------------- RECALCUATE SAVINGS AND ID DATA IN STACK ------------------- //
+    private void recalculateIDandSavings(){
+        
+        
+        for(int x1 = 0 ; x1 < parentPanel.stk_Savings.size() ; x1++){
+            parentPanel.stk_ID.set(x1, x1+1);
+            double tempSavings = 0;
+            for(int x2 = 0 ; x2 <= x1 ; x2++){
+                tempSavings += parentPanel.stk_Amount.get(x2);
+            }
+            parentPanel.stk_Savings.set(x1, tempSavings);
+        }
+    }
+    
+    
+    
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cmb_Categories;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel6;
     private org.jdesktop.swingx.JXDatePicker jxd_Date;
     private javax.swing.JLabel lb_AddEditTile;
@@ -473,7 +645,12 @@ public class AddEditForm extends javax.swing.JDialog {
     private javax.swing.JFormattedTextField txt_Amount;
     private javax.swing.JTextField txt_Item;
     // End of variables declaration//GEN-END:variables
-    private int x,y;
+    
+    
+    
+    private File fl_DataSource = SettingsClass.getDataSource();
+    private FileWriter flw_Writer;
+    private int formAxisX,formAxisY;
     private TransactionsPanel parentPanel;
     private int editingID;
     private boolean isExpense = true;

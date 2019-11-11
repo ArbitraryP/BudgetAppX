@@ -186,6 +186,7 @@
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="0" red="0" type="rgb"/>
             </Property>
+            <Property name="editable" type="boolean" value="true"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Roboto" size="14" style="0"/>
             </Property>
@@ -215,6 +216,7 @@
             </Property>
           </Properties>
           <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="cmb_Categories.setSelectedItem(&quot;Category&quot;);&#xa;cmb_Categories.setEditable(false);"/>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
@@ -226,7 +228,7 @@
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jxd_Date.setFormats(&quot;dd/MM/yyyy E&quot;);"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jxd_Date.setFormats(&quot;dd/MM/yyyy E&quot;);&#xa;jxd_Date.getEditor().setEditable(false);&#xa;//jxd_Date.getEditor().setText(&quot;Date&quot;);&#xa;&#xa;LocalDateTime now = LocalDateTime.now();  &#xa;ZonedDateTime zdt = now.atZone(ZoneId.systemDefault());&#xa;Date output = Date.from(zdt.toInstant());&#xa;jxd_Date.setDate(output);"/>
           </AuxValues>
         </Component>
         <Container class="javax.swing.JPanel" name="pnl_Toggle">
@@ -409,6 +411,7 @@
             </Property>
           </Properties>
           <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txt_AmountFocusLost"/>
             <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_AmountKeyTyped"/>
           </Events>
         </Component>

@@ -59,6 +59,7 @@ public class BudgetAppX extends javax.swing.JFrame {
         setResizable(false);
 
         pnl_Background.setBackground(new java.awt.Color(0, 0, 0));
+        pnl_Background.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(66, 66, 66)));
 
         pnl_TitleBar.setBackground(new java.awt.Color(0, 0, 0));
         pnl_TitleBar.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {

@@ -1,3 +1,7 @@
-1,08/11/2019 Fri,Sweldo,Salary,10000,10000;
-2,09/11/2019 Sat,Meralco,Utilities,-3600,6400;
-3,10/11/2019 Sun,STI-Tuition,Household,-5000,1400;
+1,06/11/2019 Wed,Tuition,Household,-2500.0,8425.0;
+2,07/11/2019 Thu,Tekken,Entertainment,-700.0,8425.0;
+3,07/11/2019 Thu,Tires,Car,-25.0,8425.0;
+4,08/11/2019 Fri,Sweldo,Salary,10000.0,8425.0;
+5,10/11/2019 Sun,BookClient,Salary,2500.0,8425.0;
+6,11/11/2019 Mon,PrimeWater,Household,-600.0,8425.0;
+7,11/11/2019 Mon,Avengers,Entertainment,-250.0,0.0;
