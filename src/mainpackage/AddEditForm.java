@@ -30,13 +30,15 @@ public class AddEditForm extends javax.swing.JDialog {
         
     } 
     
+    // -------------- Constructor for ADD TRANS -------------- //
     public AddEditForm( java.awt.Frame parent, boolean modal, TransactionsPanel panel ) {
         this(parent, modal);
         parentPanel = panel;
-        
+        isEditing = false;
         
     }
     
+    // -------------- Constructor for EDIT TRANS -------------- //
     public AddEditForm ( java.awt.Frame parent, boolean modal, TransactionsPanel panel, int id, String item, String category, Date date, double Amount){
         this(parent, modal, panel);
         editingID = id;
@@ -425,9 +427,13 @@ public class AddEditForm extends javax.swing.JDialog {
                     == JOptionPane.YES_OPTION){
                 
                 //Call Add/Edit Method
-                submitTransaction();
-                dispose();
-                parentPanel.repopulateTable();
+                if(parentPanel.validateDataSource()){
+                    submitTransaction();
+                    dispose();
+                    parentPanel.refreshData();
+                    parentPanel.repopulateTable();
+                }
+                
                 
             }
             
@@ -490,11 +496,6 @@ public class AddEditForm extends javax.swing.JDialog {
     
     // ------------------------ CUSTOM METHODS ------------------------ //
     
-    //SetParentPanel
-    public void setParentPanel(TransactionsPanel panel){
-        parentPanel = panel;
-    }
-    
     public void toggleSymbol(){
         if(isExpense){
             lb_Toggle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainpackage/res/icons/round_add_white_18dp small.png")));
@@ -549,7 +550,7 @@ public class AddEditForm extends javax.swing.JDialog {
         
         
         
-        int useID = -1;
+        int useID = -1; //by default it assumes it is last = push into stack
         String useItem = txt_Item.getText();
         String useCategory = cmb_Categories.getSelectedItem().toString();
         Date useDate = jxd_Date.getDate();
@@ -558,26 +559,36 @@ public class AddEditForm extends javax.swing.JDialog {
         
         
         // SET ID VALUE... if last.. use -1 instead
-        if(isEditing){
-            useID = editingID;
+        
+        
+        if(isEditing){ // EDITING TRANSACTION
+            //Remove Item the PROCEED to Add new one
+            parentPanel.deleteData(editingID);
             
-        }else{ // SET ID VALUE BASED ON DATE
-            //loop to traverse all Dates
-            for(int i = parentPanel.stk_Date.size()-1; i >= 0; i--){
-                //Checks if greater
-                if( useDate.compareTo(parentPanel.stk_Date.get(i)) >= 0){
-                    //Checks if last by date
-                    if(i==parentPanel.stk_Date.size()-1){
-                        useID = -1; //latest.. so use push instead
-                        
-                    }else{
-                        useID = i+1; //place it after the target
-                        break;
-                    }
-                    
+        }
+
+        // ADDING TRANSACTION
+            
+        //Get ID base on Date - loop to traverse all Dates - 
+        for(int i = parentPanel.stk_Date.size()-1; i >= 0; i--){
+            //Checks if lesser
+            if( useDate.compareTo(parentPanel.stk_Date.get(i)) >= 0){
+                //Checks if last by date
+                if(i==parentPanel.stk_Date.size()-1){
+                    useID = -1; //latest.. so use push instead
+                    break;
+                }else{
+                    useID = i+2; //place it after the target
+                    break;
                 }
+
             }
         }
+            
+            
+            
+            
+        
         
         // SET AMOUNT VALUE IF POSITIVE OR NEGATIVE
         if(isExpense){
@@ -604,24 +615,10 @@ public class AddEditForm extends javax.swing.JDialog {
             
         }
         
-        recalculateIDandSavings();
+        parentPanel.updateIDSavingsValues();
         parentPanel.saveDataSource();
         
         
-    }
-    
-    // ------------------- RECALCUATE SAVINGS AND ID DATA IN STACK ------------------- //
-    private void recalculateIDandSavings(){
-        
-        
-        for(int x1 = 0 ; x1 < parentPanel.stk_Savings.size() ; x1++){
-            parentPanel.stk_ID.set(x1, x1+1);
-            double tempSavings = 0;
-            for(int x2 = 0 ; x2 <= x1 ; x2++){
-                tempSavings += parentPanel.stk_Amount.get(x2);
-            }
-            parentPanel.stk_Savings.set(x1, tempSavings);
-        }
     }
     
     

@@ -35,8 +35,6 @@ public class SettingsClass {
     
     // -------------------------- MUTATORS -------------------------- //
     
-    
-    
     public static void setDataSource(File newFile){
         fl_DataSource = newFile;
     }

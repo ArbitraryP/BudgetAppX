@@ -23,6 +23,7 @@ public class BudgetAppX extends javax.swing.JFrame {
      */
     public BudgetAppX() {
         initComponents();
+        navbtn_OnClick( pnl_NavMainDashB, 'm');
     }
 
     /**
@@ -50,10 +51,12 @@ public class BudgetAppX extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         pnl_NavAbout = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         pnl_Container = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Rudy Coins");
+        setTitle("Thrifty Coins");
         setBackground(new java.awt.Color(0, 0, 0));
         setUndecorated(true);
         setResizable(false);
@@ -88,7 +91,7 @@ public class BudgetAppX extends javax.swing.JFrame {
             }
         });
 
-        pnl_Title.setBackground(new java.awt.Color(32, 32, 32));
+        pnl_Title.setBackground(new java.awt.Color(0, 0, 0));
 
         javax.swing.GroupLayout pnl_TitleLayout = new javax.swing.GroupLayout(pnl_Title);
         pnl_Title.setLayout(pnl_TitleLayout);
@@ -107,7 +110,7 @@ public class BudgetAppX extends javax.swing.JFrame {
             pnl_TitleBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_TitleBarLayout.createSequentialGroup()
                 .addComponent(pnl_Title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 762, Short.MAX_VALUE)
                 .addComponent(lb_Minimize)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lb_Exit)
@@ -156,7 +159,7 @@ public class BudgetAppX extends javax.swing.JFrame {
         pnl_NavMainDashBLayout.setHorizontalGroup(
             pnl_NavMainDashBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_NavMainDashBLayout.createSequentialGroup()
-                .addContainerGap(25, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(66, 66, 66))
         );
@@ -337,6 +340,8 @@ public class BudgetAppX extends javax.swing.JFrame {
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainpackage/res/imgs/TopLeft NavBar.png"))); // NOI18N
+
         javax.swing.GroupLayout pnl_NavBarLayout = new javax.swing.GroupLayout(pnl_NavBar);
         pnl_NavBar.setLayout(pnl_NavBarLayout);
         pnl_NavBarLayout.setHorizontalGroup(
@@ -346,11 +351,22 @@ public class BudgetAppX extends javax.swing.JFrame {
             .addComponent(pnl_NavMainDashB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(pnl_NavSettings, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(pnl_NavAbout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_NavBarLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(113, 113, 113))
+            .addGroup(pnl_NavBarLayout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(jLabel2)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         pnl_NavBarLayout.setVerticalGroup(
             pnl_NavBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_NavBarLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(29, 29, 29)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(pnl_NavMainDashB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(pnl_NavTransactions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -446,25 +462,25 @@ public class BudgetAppX extends javax.swing.JFrame {
     
     // ----- NAVIGATION BAR - MOUSE CLICK  ------ //
     private void pnl_NavMainDashBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_NavMainDashBMouseClicked
-        navbtn_OnClick(evt, pnl_NavMainDashB, 'm');
+        navbtn_OnClick( pnl_NavMainDashB, 'm');
     }//GEN-LAST:event_pnl_NavMainDashBMouseClicked
 
     private void pnl_NavBudSumMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_NavBudSumMouseClicked
-        navbtn_OnClick(evt, pnl_NavBudSum, 'b');
+        navbtn_OnClick(pnl_NavBudSum, 'b');
     }//GEN-LAST:event_pnl_NavBudSumMouseClicked
 
     private void pnl_NavSettingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_NavSettingsMouseClicked
-        navbtn_OnClick(evt, pnl_NavSettings, 's');
+        navbtn_OnClick(pnl_NavSettings, 's');
     }//GEN-LAST:event_pnl_NavSettingsMouseClicked
 
     private void pnl_NavAboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_NavAboutMouseClicked
-        navbtn_OnClick(evt, pnl_NavAbout, 'a');
+        navbtn_OnClick(pnl_NavAbout, 'a');
     }//GEN-LAST:event_pnl_NavAboutMouseClicked
 
     // ----- NAVIGATION BAR - MOUSE CLICKED ------ //
     
     private void pnl_NavTransactionsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_NavTransactionsMouseClicked
-        navbtn_OnClick(evt, pnl_NavTransactions, 't');
+        navbtn_OnClick( pnl_NavTransactions, 't');
     }//GEN-LAST:event_pnl_NavTransactionsMouseClicked
     
     
@@ -473,7 +489,7 @@ public class BudgetAppX extends javax.swing.JFrame {
     
     
     // Navigation Bar - Mouse Clicked
-    private void navbtn_OnClick(MouseEvent evt, JPanel pnl, char Navigation){
+    private void navbtn_OnClick(JPanel pnl, char Navigation){
         
         //Change Color of Selected Panel
         pnl_NavMainDashB.setBorder(createEmptyBorder(0, 5, 0, 0));
@@ -561,7 +577,9 @@ public class BudgetAppX extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;

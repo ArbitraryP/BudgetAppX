@@ -50,6 +50,8 @@ public class TransactionsPanel extends javax.swing.JPanel {
         lb_Delete = new javax.swing.JLabel();
         pnl_Refresh = new javax.swing.JPanel();
         lb_Refresh = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
 
         jLabel1.setText("jLabel1");
 
@@ -220,14 +222,23 @@ public class TransactionsPanel extends javax.swing.JPanel {
         });
         pnl_Refresh.add(lb_Refresh, java.awt.BorderLayout.CENTER);
 
+        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel1.setLayout(new java.awt.BorderLayout());
+
+        jLabel2.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel2.setFont(new java.awt.Font("Roboto Light", 0, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Transactions");
+        jPanel1.add(jLabel2, java.awt.BorderLayout.CENTER);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 790, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 752, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(pnl_Refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -236,14 +247,17 @@ public class TransactionsPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(pnl_Edit, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pnl_Add, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addComponent(pnl_Add, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(25, 25, 25))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 511, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnl_Add, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -275,7 +289,6 @@ public class TransactionsPanel extends javax.swing.JPanel {
         
         AddEditForm jdf_AddEdit = new AddEditForm(parentFrame, true, this);
         jdf_AddEdit.setVisible(true);
-        jdf_AddEdit.setParentPanel(this);
         
     }//GEN-LAST:event_lb_AddMouseClicked
     
@@ -300,7 +313,6 @@ public class TransactionsPanel extends javax.swing.JPanel {
                     
             AddEditForm jdf_AddEdit = new AddEditForm(parentFrame, true, this, selectedid, selecteditem, selectedcategory, selecteddate, selectedamount);
             jdf_AddEdit.setVisible(true);
-            jdf_AddEdit.setParentPanel(this);
         }
     }//GEN-LAST:event_lb_EditMouseClicked
 
@@ -324,18 +336,8 @@ public class TransactionsPanel extends javax.swing.JPanel {
                 if(validateDataSource()){
                     
                     int selectedid = Integer.parseInt(tbl_TransTable.getValueAt(selectedtablerow, 0).toString());
+                    deleteData(selectedid);
                     
-                    stk_ID.remove(selectedid-1);
-                    stk_Date.remove(selectedid-1);
-                    stk_Item.remove(selectedid-1); 
-                    stk_Category.remove(selectedid-1);
-                    stk_Amount.remove(selectedid-1);
-                    stk_Savings.remove(selectedid-1); 
-                    
-                    //update ID value in stack
-                    for(int x = 0; x < stk_ID.size() ;x++){
-                        stk_ID.set(x, x+1);
-                    }
                     repopulateTable();
                     
                     //Write to File
@@ -562,6 +564,29 @@ public class TransactionsPanel extends javax.swing.JPanel {
         tbl_TransTable.getRowSorter().toggleSortOrder(1); //two time to set as descending
     }
     
+    // ----- DELETE DATA IN STACK ------ //
+    public void deleteData(int deletingID){
+        stk_ID.remove(deletingID-1);
+        stk_Date.remove(deletingID-1);
+        stk_Item.remove(deletingID-1); 
+        stk_Category.remove(deletingID-1);
+        stk_Amount.remove(deletingID-1);
+        stk_Savings.remove(deletingID-1); 
+        updateIDSavingsValues();
+    }
+    
+    
+    // ----- UPDATE THE ID AND SAVINGS VALUES IN STACK ------ //
+    public void updateIDSavingsValues(){
+        for(int x1 = 0 ; x1 < stk_Savings.size() ; x1++){
+            stk_ID.set(x1, x1+1);
+            double tempSavings = 0;
+            for(int x2 = 0 ; x2 <= x1 ; x2++){
+                tempSavings += stk_Amount.get(x2);
+            }
+            stk_Savings.set(x1, tempSavings);
+        }
+    }
     
     // ----- SAVES THE STACK VALUES ITO THE DATA SOURCE FILE------ //
     protected void saveDataSource(){
@@ -608,8 +633,13 @@ public class TransactionsPanel extends javax.swing.JPanel {
         
     }
     
+    
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lb_Add;
     private javax.swing.JLabel lb_Delete;
