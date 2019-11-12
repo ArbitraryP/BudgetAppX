@@ -550,7 +550,7 @@ public class AddEditForm extends javax.swing.JDialog {
         
         
         
-        int useID = -1; //by default it assumes it is last = push into stack
+        int useID = 1; //by default it assumes it is last 
         String useItem = txt_Item.getText();
         String useCategory = cmb_Categories.getSelectedItem().toString();
         Date useDate = jxd_Date.getDate();
