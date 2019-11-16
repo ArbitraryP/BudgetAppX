@@ -94,14 +94,21 @@ public class TransactionsPanel extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        TableColumnModel tcm = tbl_TransTable.getColumnModel();
+        //tcm.removeColumn( tcm.getColumn(0) );
         tbl_TransTable.setIntercellSpacing(new java.awt.Dimension(20, 20));
         tbl_TransTable.setRowHeight(40);
         tbl_TransTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tbl_TransTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tbl_TransTable.getTableHeader().setReorderingAllowed(false);
+        tbl_TransTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_TransTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbl_TransTable);
         if (tbl_TransTable.getColumnModel().getColumnCount() > 0) {
-            tbl_TransTable.getColumnModel().getColumn(0).setPreferredWidth(5);
+            tbl_TransTable.getColumnModel().getColumn(1).setPreferredWidth(50);
         }
 
         pnl_Add.setBackground(new java.awt.Color(0, 0, 0));
@@ -299,17 +306,17 @@ public class TransactionsPanel extends javax.swing.JPanel {
         if(selectedtablerow == -1){
             JOptionPane.showMessageDialog(null,"No Transaction Selected");
         }else{
-            int selectedid = Integer.parseInt(tbl_TransTable.getValueAt(selectedtablerow, 0).toString());
-            String selecteditem = tbl_TransTable.getValueAt(selectedtablerow, 2).toString();
-            String selectedcategory = tbl_TransTable.getValueAt(selectedtablerow, 3).toString();
-            String datetmp = tbl_TransTable.getValueAt(selectedtablerow, 1).toString();
+            int selectedid = Integer.parseInt(tbl_TransTable.getModel().getValueAt(selectedtablerow, 0).toString());
+            String selecteditem = tbl_TransTable.getModel().getValueAt(selectedtablerow, 2).toString();
+            String selectedcategory = tbl_TransTable.getModel().getValueAt(selectedtablerow, 3).toString();
+            String datetmp = tbl_TransTable.getModel().getValueAt(selectedtablerow, 1).toString();
             Date selecteddate = null;
             try {
                 selecteddate = new SimpleDateFormat("dd/MM/yyyy E").parse(datetmp);
             } catch (ParseException ex) {
                 Logger.getLogger(TransactionsPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
-            double selectedamount = Double.parseDouble(tbl_TransTable.getValueAt(selectedtablerow, 4).toString());
+            double selectedamount = Double.parseDouble(tbl_TransTable.getModel().getValueAt(selectedtablerow, 4).toString());
                     
             AddEditForm jdf_AddEdit = new AddEditForm(parentFrame, true, this, selectedid, selecteditem, selectedcategory, selecteddate, selectedamount);
             jdf_AddEdit.setVisible(true);
@@ -335,7 +342,7 @@ public class TransactionsPanel extends javax.swing.JPanel {
                 //ANSWERED YES: Remove item from stack, rewrite file
                 if(validateDataSource()){
                     
-                    int selectedid = Integer.parseInt(tbl_TransTable.getValueAt(selectedtablerow, 0).toString());
+                    int selectedid = Integer.parseInt(tbl_TransTable.getModel().getValueAt(selectedtablerow, 0).toString());
                     deleteData(selectedid);
                     
                     repopulateTable();
@@ -366,6 +373,35 @@ public class TransactionsPanel extends javax.swing.JPanel {
         }
         
     }//GEN-LAST:event_lb_RefreshMouseClicked
+
+    
+    // DOUBLE CLICKING A ROW DIRECTS TO EDIT
+    private void tbl_TransTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_TransTableMouseClicked
+        if (evt.getClickCount() == 2) {     // to detect doble click events
+            JTable target = (JTable)evt.getSource();
+            int selectedtablerow = target.getSelectedRow(); // select a row
+            //int column = target.getSelectedColumn(); // select a column
+            //JOptionPane.showMessageDialog(null, tbl_TransTable.getValueAt(row, column)); // get the value of a row and column.
+            
+            int selectedid = Integer.parseInt(tbl_TransTable.getModel().getValueAt(selectedtablerow, 0).toString());
+            String selecteditem = tbl_TransTable.getModel().getValueAt(selectedtablerow, 2).toString();
+            String selectedcategory = tbl_TransTable.getModel().getValueAt(selectedtablerow, 3).toString();
+            String datetmp = tbl_TransTable.getModel().getValueAt(selectedtablerow, 1).toString();
+            Date selecteddate = null;
+            try {
+                selecteddate = new SimpleDateFormat("dd/MM/yyyy E").parse(datetmp);
+            } catch (ParseException ex) {
+                Logger.getLogger(TransactionsPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            double selectedamount = Double.parseDouble(tbl_TransTable.getModel().getValueAt(selectedtablerow, 4).toString());
+                    
+            AddEditForm jdf_AddEdit = new AddEditForm(parentFrame, true, this, selectedid, selecteditem, selectedcategory, selecteddate, selectedamount);
+            jdf_AddEdit.setVisible(true);
+            
+        }
+        
+        
+    }//GEN-LAST:event_tbl_TransTableMouseClicked
 
     
     
@@ -566,20 +602,30 @@ public class TransactionsPanel extends javax.swing.JPanel {
     
     // ----- DELETE DATA IN STACK ------ //
     public void deleteData(int deletingID){
-        stk_ID.remove(deletingID-1);
-        stk_Date.remove(deletingID-1);
-        stk_Item.remove(deletingID-1); 
-        stk_Category.remove(deletingID-1);
-        stk_Amount.remove(deletingID-1);
-        stk_Savings.remove(deletingID-1); 
-        updateIDSavingsValues();
+        
+        //Locate deletingID index in Stack
+        int tempID = 0;
+        for (int x = 0; x < stk_ID.size();  x++){
+            if(stk_ID.get(x) == deletingID){
+                tempID = x;
+                
+            }
+                        
+        }
+        stk_ID.remove(tempID);
+        stk_Date.remove(tempID);
+        stk_Item.remove(tempID); 
+        stk_Category.remove(tempID);
+        stk_Amount.remove(tempID);
+        stk_Savings.remove(tempID); 
+        updateSavingsValues();
     }
     
     
     // ----- UPDATE THE ID AND SAVINGS VALUES IN STACK ------ //
-    public void updateIDSavingsValues(){
+    public void updateSavingsValues(){
         for(int x1 = 0 ; x1 < stk_Savings.size() ; x1++){
-            stk_ID.set(x1, x1+1);
+            //stk_ID.set(x1, x1+1);
             double tempSavings = 0;
             for(int x2 = 0 ; x2 <= x1 ; x2++){
                 tempSavings += stk_Amount.get(x2);

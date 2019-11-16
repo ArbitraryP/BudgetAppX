@@ -404,7 +404,7 @@ public class AddEditForm extends javax.swing.JDialog {
               
     }//GEN-LAST:event_txt_ItemFocusLost
     
-    //CANCEL IS CLICKED
+    // ------ CANCEL IS CLICKED ------ //
     private void lb_CancelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_CancelMouseClicked
         // TODO add your handling code here:
         dispose();
@@ -423,20 +423,13 @@ public class AddEditForm extends javax.swing.JDialog {
         if(!fieldsAreValid()){
             JOptionPane.showMessageDialog(null,"No Category Selected");
         }else{
-            if(JOptionPane.showConfirmDialog (null, "Confirm Submission?","Thrifty Coins",JOptionPane.YES_NO_OPTION)
-                    == JOptionPane.YES_OPTION){
-                
-                //Call Add/Edit Method
-                if(parentPanel.validateDataSource()){
-                    submitTransaction();
-                    dispose();
-                    parentPanel.refreshData();
-                    parentPanel.repopulateTable();
-                }
-                
-                
+            //Call Add/Edit Method
+            if(parentPanel.validateDataSource()){
+                submitTransaction();
+                dispose();
+                parentPanel.refreshData();
+                parentPanel.repopulateTable();
             }
-            
             
         }
         
@@ -546,6 +539,90 @@ public class AddEditForm extends javax.swing.JDialog {
     
     
     // -------------------  MAIN ADD/EDIT METHOD ------------------- //
+    
+    private void submitTransaction(){
+        
+        
+        //Setbased on latest ID on File
+        int tempID = 0;
+        for (int x = 0; x < parentPanel.stk_ID.size();  x++){
+            if(parentPanel.stk_ID.get(x) > tempID){
+                tempID = parentPanel.stk_ID.get(x);
+                
+            }
+                        
+        }
+        
+        int useID = tempID+1;
+        int targetLoc = 1; //by default it assumes it is last 
+        String useItem = txt_Item.getText();
+        String useCategory = cmb_Categories.getSelectedItem().toString();
+        Date useDate = jxd_Date.getDate();
+        double useAmount = Double.parseDouble(txt_Amount.getText());
+        
+        
+        
+        // SET ID VALUE... if last.. use -1 instead
+        
+        if(isEditing){ // EDITING TRANSACTION
+            //Remove Item the PROCEED to Add new one
+            parentPanel.deleteData(editingID);
+            useID = editingID;
+        } 
+        
+
+        // ADDING TRANSACTION
+            
+        //Set Target Location base on Date - loop to traverse all Dates - 
+        for(int i = parentPanel.stk_Date.size()-1; i >= 0; i--){
+            //Checks if lesser
+            if( useDate.compareTo(parentPanel.stk_Date.get(i)) >= 0){
+                //Checks if last by date
+                if(i==parentPanel.stk_Date.size()-1){
+                    targetLoc = -1; //latest.. so use push instead
+                    break;
+                }else{
+                    targetLoc = i+2; //place it after the target
+                    break;
+                }
+
+            }
+        }
+            
+           
+            
+        
+        // SET AMOUNT VALUE IF POSITIVE OR NEGATIVE
+        if(isExpense){
+            useAmount *= -1;
+        }
+        
+        
+        // PUT ALL DATA IN STACK
+        if(targetLoc == -1){ //use push
+            parentPanel.stk_ID.push(useID);
+            parentPanel.stk_Date.push(useDate);
+            parentPanel.stk_Item.push(useItem);
+            parentPanel.stk_Category.push(useCategory);
+            parentPanel.stk_Amount.push(useAmount);
+            parentPanel.stk_Savings.push(0.0);
+            
+        }else{ //Add 
+            parentPanel.stk_ID.add(targetLoc-1, useID);
+            parentPanel.stk_Date.add(targetLoc-1, useDate);
+            parentPanel.stk_Item.add(targetLoc-1, useItem);
+            parentPanel.stk_Category.add(targetLoc-1, useCategory);
+            parentPanel.stk_Amount.add(targetLoc-1, useAmount);
+            parentPanel.stk_Savings.add(targetLoc-1, 0.0);
+            
+        }
+        
+        parentPanel.updateSavingsValues();
+        parentPanel.saveDataSource();
+    }
+    
+    //First Version
+    /**
     private void submitTransaction(){
         
         
@@ -615,12 +692,12 @@ public class AddEditForm extends javax.swing.JDialog {
             
         }
         
-        parentPanel.updateIDSavingsValues();
+        parentPanel.updateSavingsValues();
         parentPanel.saveDataSource();
         
         
     }
-    
+    */
     
     
     
