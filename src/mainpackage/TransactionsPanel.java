@@ -95,7 +95,7 @@ public class TransactionsPanel extends javax.swing.JPanel {
             }
         });
         TableColumnModel tcm = tbl_TransTable.getColumnModel();
-        //tcm.removeColumn( tcm.getColumn(0) );
+        tcm.removeColumn( tcm.getColumn(0) );
         tbl_TransTable.setIntercellSpacing(new java.awt.Dimension(20, 20));
         tbl_TransTable.setRowHeight(40);
         tbl_TransTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
