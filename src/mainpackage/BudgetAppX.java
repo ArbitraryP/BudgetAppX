@@ -356,7 +356,6 @@ public class BudgetAppX extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(113, 113, 113))
             .addGroup(pnl_NavBarLayout.createSequentialGroup()
-                .addGap(0, 0, 0)
                 .addComponent(jLabel2)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
